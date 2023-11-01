@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: ibl-web/auth.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: ibl-web/auth.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @namespace iblwebauth
+ */
+
+import HttpService from "../http";
+import endpoint from "../config";
+import { buildQueryParams, parseJwt } from "../utils";
+
+const http = new HttpService();
+
+/**
+ * Login a user to ibl web
+ * @function login
+ * @memberof iblwebauth
+ *
+ * @param {Object} data
+ * @param {String} data.username User's username
+ * @param {String} data.password User's password
+ * @param {callback} successCb
+ * @param {callback} errorCb
+ * @param {Object} param
+ * @param {String} [param.tenant=main] IBL tenant
+ * @param {String} param.username username to make this request on behalf of
+ *
+ * @example &lt;caption>Login user to ibl web&lt;/caption>
+ * This usage:
+ *
+ * ```js
+ * iblwebauth.login(
+ *    {username: "example", "password": "not-secure"},
+ *    (data) => console.log(data)
+ * )
+ * ```
+ */
+export function login(data, successCb = null, errorCb = null, params = {}) {
+  const urlParams = new URLSearchParams(window.location.search);
+  let tenant = urlParams.get("tenant");
+  tenant = tenant ? tenant : "main";
+  localStorage.setItem("tenant", tenant);
+  http.post(
+    endpoint.LOGIN + buildQueryParams(params),
+    data,
+    (data) => {
+      successCb &amp;&amp; successCb(data);
+    },
+    (error) => {
+      errorCb &amp;&amp; errorCb(error);
+    },
+    false
+  );
+}
+
+/**
+ * Complete a user login process during SSO. This will save the user token to the local storage
+ * and will redirect the user if redirect params are set
+ * @function completeLogin
+ * @memberof iblwebauth
+ *
+ * @example &lt;caption>Complete the user SSO login&lt;/caption>
+ * This usage:
+ *
+ * ```js
+ * iblwebauth.completeLogin()
+ * ```
+ */
+export function completeLogin() {
+  const queryString = location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const token = urlParams.get("token");
+  urlParams.delete("token");
+  let path = "";
+  if (urlParams.has("redirect-path")) {
+    path += urlParams.get("redirect-path") + "&amp;";
+    urlParams.delete("redirect-path");
+    urlParams.forEach((value, key) => {
+      path += `${key}=${value}&amp;`;
+    });
+  }
+
+  const tokenData = parseJwt(token || "");
+  localStorage.setItem("token", token);
+  const axd_token = tokenData.data.axd_token;
+  initiateAxdClientsWithToken(axd_token);
+  localStorage.setItem("axd_token", axd_token);
+  localStorage.setItem("userData", JSON.stringify(tokenData.data.user));
+  localStorage.setItem("ibl_axd_url", tokenData.data.ibl_axd_url);
+  localStorage.setItem("ibl_web_url", tokenData.data.ibl_web_url);
+  localStorage.setItem("ibl_edx_url", tokenData.data.ibl_edx_url);
+  localStorage.setItem("ibl_search_url", tokenData.data.ibl_search_url);
+  localStorage.setItem("tenant", tokenData.data.tenant);
+  if (path) {
+    path = path.replace(/\s+/g, "+");
+    if (path.includes("?redirect")) {
+      path = path.replace("?redirect", "&amp;redirect");
+    }
+    location.replace(`.${path}`);
+  } else {
+    location.replace("./");
+  }
+}
+
+/**
+ * Register a new user to the platform
+ * @function registerUser
+ * @memberof iblwebauth
+ *
+ * @param {Object} data
+ * @param {String} data.email User's email
+ * @param {String} data.username User's username
+ * @param {String} data.password User's password
+ * @param {String} data.name User's full name
+ * @param {String} [data.company=""] User's Company
+ * @param {callback} successCb
+ * @param {callback} errorCb
+ * @param {Object} param
+ * @param {String} [param.tenant=main] IBL tenant
+ * @param {String} param.username username to make this request on behalf of
+ * @example &lt;caption>Register a user&lt;/caption>
+ * This usage:
+ *
+ * ```js
+ * iblwebauth.registerUser({
+ *  email: user@example.com
+ *  username: example
+ *  password: not-secure,
+ *  name: "New User",
+ *  company: BOB
+ * })
+ * ```
+ */
+export function registerUser(data, successCb = null, errorCb = null) {
+  http.post(
+    endpoint.IBL_WEB.REGISTER_USER,
+    data,
+    (data) => {
+      successCb &amp;&amp; successCb(data);
+    },
+    (error) => {
+      errorCb &amp;&amp; errorCb(error);
+    },
+    false
+  );
+}
+
+/**
+ * Initiate a forget user password operation.
+ * An email with reset password instructions will be sent to user whose email is provided
+ * @function forgotPassword
+ * @memberof iblwebauth
+ *
+ * @param {Object} data
+ * @param {String} data.email User's email
+ * @param {callback} successCb
+ * @param {callback} errorCb
+ * @param {Object} param
+ * @param {String} [param.tenant=main] IBL tenant
+ * @param {String} param.username username to make this request on behalf of
+ * @example &lt;caption>Initiate a forget user password operation&lt;/caption>
+ * This usage:
+ *
+ * ```js
+ * iblwebauth.forgotPassword({
+ *  email: user@example.com
+ * })
+ * ```
+ */
+export function forgetPassword(data, successCb = null, errorCb = null) {
+  http.post(
+    endpoint.IBL_WEB.FORGET_PASSWORD,
+    data,
+    (data) => {
+      successCb &amp;&amp; successCb(data);
+    },
+    (error) => {
+      errorCb &amp;&amp; errorCb(error);
+    },
+    false
+  );
+}
+
+/**
+ * Reset the user's password. An email will be sent to the user to confirm password change
+ * @function resetPassword
+ * @memberof iblwebauth
+ *
+ * @param {Object} data
+ * @param {String} data.password User's new password
+ * @param {String} data.reset_password_token The token to use for the password reset operation
+ * @param {callback} successCb
+ * @param {callback} errorCb
+ * @param {Object} param
+ * @param {String} [param.tenant=main] IBL tenant
+ * @param {String} param.username username to make this request on behalf of
+ * @example &lt;caption>Reset password of user to &lt;new-not-secure>&lt;/caption>
+ * This usage:
+ *
+ * ```js
+ * iblwebauth.resetPassword({
+ *  password: user@example.com,
+ *  reset_password_token: token
+ * })
+ * ```
+ */
+export function resetPassword(data, successCb = null, errorCb = null) {
+  http.post(
+    endpoint.IBL_WEB.FORGET_PASSWORD,
+    data,
+    (data) => {
+      successCb &amp;&amp; successCb(data);
+    },
+    (error) => {
+      errorCb &amp;&amp; errorCb(error);
+    },
+    false
+  );
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="ibldmcourses.html">ibldmcourses</a></li><li><a href="ibldmplatform.html">ibldmplatform</a></li><li><a href="iblwebauth.html">iblwebauth</a></li><li><a href="iblweblogin.html">iblweblogin</a></li><li><a href="iblweblogout.html">iblweblogout</a></li></ul><h3>Global</h3><ul><li><a href="global.html#getOrgCredentials">getOrgCredentials</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed Nov 01 2023 18:41:59 GMT+0100 (West Africa Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
