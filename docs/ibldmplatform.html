@@ -1293,6 +1293,336 @@ ibldmplatform.getCorePlatformUsers(
 
 
         
+            
+
+    
+
+    
+    <h4 class="name" id=".updateCorePlatformConfigSite"><span class="type-signature">(static) </span>updateCorePlatformConfigSite<span class="signature">(data, successCb, errorCb)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Update the platform config</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>key</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Platform key</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>field_key</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Config field to update</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Config value for the field to update</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>successCb</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">callback</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>errorCb</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">callback</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ibl-dm_platform.js.html">ibl-dm/platform.js</a>, <a href="ibl-dm_platform.js.html#line141">line 141</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://github.com/ibleducation/ibl-dm-pro/blob/v2/USAGE.md#platform-site-config-update">https://github.com/ibleducation/ibl-dm-pro/blob/v2/USAGE.md#platform-site-config-update</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+        <p class="code-caption">Update name for the platform "tenant" to "Tenant B"</p>
+    
+    <pre class="prettyprint"><code>This usage:
+
+```js
+ibldmplatform.updateCorePlatformConfigSite(
+   {key: "tenant", "field_key": "name", "value": "Tenant B"},
+   (data) => console.log(data),
+   (error) => console.error(error)
+)
+```</code></pre>
+
+
+
+        
     
 
     
@@ -1308,13 +1638,13 @@ ibldmplatform.getCorePlatformUsers(
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="ibldmcourses.html">ibldmcourses</a></li><li><a href="ibldmplatform.html">ibldmplatform</a></li><li><a href="iblwebauth.html">iblwebauth</a></li><li><a href="iblweblogin.html">iblweblogin</a></li><li><a href="iblweblogout.html">iblweblogout</a></li></ul><h3>Global</h3><ul><li><a href="global.html#getOrgCredentials">getOrgCredentials</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="ibldmcourses.html">ibldmcourses</a></li><li><a href="ibldmplatform.html">ibldmplatform</a></li><li><a href="ibledxusers.html">ibledxusers</a></li><li><a href="iblwebauth.html">iblwebauth</a></li><li><a href="iblweblogin.html">iblweblogin</a></li><li><a href="iblweblogout.html">iblweblogout</a></li></ul><h3>Global</h3><ul><li><a href="global.html#getOrgCredentials">getOrgCredentials</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed Nov 01 2023 18:41:59 GMT+0100 (West Africa Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Nov 03 2023 16:03:52 GMT+0100 (West Africa Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
