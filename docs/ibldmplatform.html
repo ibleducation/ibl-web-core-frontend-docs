@@ -808,7 +808,7 @@ ibldmplatform.createCatalogInvitationsPlatform(
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ibl-dm_platform.js.html">ibl-dm/platform.js</a>, <a href="ibl-dm_platform.js.html#line50">line 50</a>
+        <a href="ibl-dm_platform.js.html">ibl-dm/platform.js</a>, <a href="ibl-dm_platform.js.html#line84">line 84</a>
     </li></ul></dd>
     
 
@@ -1240,7 +1240,7 @@ ibldmplatform.createCoreUsersPlatforms(
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ibl-dm_platform.js.html">ibl-dm/platform.js</a>, <a href="ibl-dm_platform.js.html#line101">line 101</a>
+        <a href="ibl-dm_platform.js.html">ibl-dm/platform.js</a>, <a href="ibl-dm_platform.js.html#line135">line 135</a>
     </li></ul></dd>
     
 
@@ -1285,6 +1285,260 @@ ibldmplatform.createCoreUsersPlatforms(
 ```js
 ibldmplatform.getCorePlatformUsers(
    {key: "tenant"},
+   (data) => console.log(data),
+   (error) => console.error(error)
+)
+```</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".getPlatformConfigSitePublic"><span class="type-signature">(static) </span>getPlatformConfigSitePublic<span class="signature">(data, successCb, errorCb)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Get the platform site public config</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>key</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Tenant key</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>successCb</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">callback</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>errorCb</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">callback</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ibl-dm_platform.js.html">ibl-dm/platform.js</a>, <a href="ibl-dm_platform.js.html#line295">line 295</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://github.com/ibleducation/ibl-dm-pro/blob/v2/USAGE.md#platform-site-config-update">https://github.com/ibleducation/ibl-dm-pro/blob/v2/USAGE.md#platform-site-config-update</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+        <p class="code-caption">Get the platform site public config</p>
+    
+    <pre class="prettyprint"><code>This usage:
+
+```js
+ibldmplatform.getPlatformConfigSitePublic(
+   {key: "tenanta"},
    (data) => console.log(data),
    (error) => console.error(error)
 )
@@ -1570,7 +1824,7 @@ ibldmplatform.getCorePlatformUsers(
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ibl-dm_platform.js.html">ibl-dm/platform.js</a>, <a href="ibl-dm_platform.js.html#line141">line 141</a>
+        <a href="ibl-dm_platform.js.html">ibl-dm/platform.js</a>, <a href="ibl-dm_platform.js.html#line175">line 175</a>
     </li></ul></dd>
     
 
@@ -1644,7 +1898,7 @@ ibldmplatform.updateCorePlatformConfigSite(
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Nov 14 2023 16:05:08 GMT+0100 (West Africa Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Nov 16 2023 20:05:19 GMT+0100 (West Africa Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
